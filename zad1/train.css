@@ -1,0 +1,113 @@
+body {
+    background: #66ccff;
+    margin: 0px;
+}
+
+.sun {
+    position: absolute;
+    top: 6vh;
+    left: 6vh;
+    width: 8vh;
+    height: 8vh;
+    min-height: 50px;
+    min-width: 50px;
+    border-radius: 50%;
+    background: #ffff66;
+}
+
+.grass {
+    position: absolute;
+    top: 55%;
+    height: 45%;
+    width: 100%;
+    background: #0d8621;
+}
+
+.tracks {
+    position: absolute;
+    top: 250px;
+    height: 1%;
+    width: 100%;
+    scale: 5;
+    background: #000000;
+}
+
+.train {
+    position: absolute;
+    top: 45%;
+    left: 40%;
+    height: 200px;
+    width: 400px;
+    border-top-right-radius:10% 30%;
+    border-bottom-right-radius:30% 10%;
+    background:#552302;
+}
+
+.wheel1 {
+    position: absolute;
+    top: 120px;
+    left: 30px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: #3a3a3a;
+}
+
+.wheel2 {
+    position: absolute;
+    top: 170px;
+    left: 300px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #3a3a3a;
+}
+
+.wheel3 {
+    position: absolute;
+    top: 170px;
+    left: 210px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #3a3a3a;
+}
+
+.roof {
+    position: absolute;
+    top: -150px;
+    left: 0px;
+    height: 150px;
+    width: 200px;
+    background: #c51212;
+}
+
+.window {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    height: 90px;
+    width: 120px;
+    background: #368f8a;
+}
+
+.chimney {
+    position: absolute;
+    top: -70px;
+    left: 300px;
+    height: 70px;
+    width: 40px;
+    border-top-right-radius:10% 30%;
+    border-top-left-radius:10% 30%;
+    background: #c51212;
+}
+
+.front {
+    position: absolute;
+    top: 50px;
+    left: 400px;
+    width: 0px;
+    height: 0px;
+    border-bottom: 140px solid red;
+    border-right: 140px solid transparent;
+}
