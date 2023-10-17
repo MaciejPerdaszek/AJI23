@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="theme.css">
         <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="scripts.js"></script>
         <title>MyTODO App</title>
     </head>
@@ -10,20 +11,20 @@
         <h1>MyNotes</h1>
         <div>
             <label>Search</label>
-            <input type="text" id="inputSearch" placeholder="Type Your search here..."/>
+            <input type="text" id="inputSearch" placeholder="Type Your search here...">
         </div>
         <div id="todoListView"></div>
         <form>
             <label>Title</label>
-            <input type="text" id="inputTitle"/>
+            <input type="text" id="inputTitle">
             <label>Description</label>
-            <input type="text" id="inputDescription"/>
+            <input type="text" id="inputDescription">
             <label>Place</label>
-            <input type="text" id="inputPlace"/>
+            <input type="text" id="inputPlace">
             <label>Due date</label>
-            <input type="date" id="inputDate"/>
+            <input type="date" id="inputDate">
             <input type="button" value="add"
-            onclick="addTodo()"/>
+            onclick="addTodo()">
         </form>
     </body>
 </html>
