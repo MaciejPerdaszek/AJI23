@@ -61,12 +61,11 @@ let updateJSONbin = function() {
 }
 
 let updateTodoTable = function() {
-    let todoTable =
-    document.getElementById("todoTableView");
+    let todoTable = document.getElementById("tBodyID");
 
     //remove all elements
-    while (todoTable.childNodes.length > 2) {
-        todoTable.removeChild(todoTable.lastChild);
+    while (todoTable.firstChild) {
+        todoTable.removeChild(todoTable.firstChild);
     }
 
     //add all elements
@@ -78,7 +77,7 @@ let updateTodoTable = function() {
         (todoList[todo].description.includes(filterInput.value))
     ) {
             let newRow = document.createElement("tr");
-            
+           
             let dueDateCell = document.createElement("td");
             dueDateCell.appendChild(document.createTextNode(todoList[todo].dueDate));
             newRow.appendChild(dueDateCell);
@@ -97,15 +96,15 @@ let updateTodoTable = function() {
 
             let newDeleteButton = document.createElement("input");
             newDeleteButton.type = "button";
+            newDeleteButton.className = "btn btn-danger ";
             newDeleteButton.value = "x";
             newDeleteButton.addEventListener("click",
                 function() {
                     deleteTodo(todo);
                 });
-
+            
             let buttonCell = document.createElement("td");
             buttonCell.appendChild(newDeleteButton);
-
             newRow.appendChild(buttonCell);
 
             todoTable.appendChild(newRow);
@@ -113,7 +112,7 @@ let updateTodoTable = function() {
     }
 }
 
-setInterval(updateTodoTable, 5000);
+setInterval(updateTodoTable, 1000);
 
 let deleteTodo = function(index) {
     todoList.splice(index,1);
