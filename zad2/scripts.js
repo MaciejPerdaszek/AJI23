@@ -42,7 +42,6 @@ $.ajax({
  }
 });
 
-
 let updateJSONbin = function() {
     $.ajax({
   url: BASE_URL,
@@ -61,15 +60,13 @@ let updateJSONbin = function() {
 });
 }
 
-//initList();
-
-let updateTodoList = function() {
-    let todoListDiv =
-    document.getElementById("todoListView");
+let updateTodoTable = function() {
+    let todoTable =
+    document.getElementById("todoTableView");
 
     //remove all elements
-    while (todoListDiv.firstChild) {
-        todoListDiv.removeChild(todoListDiv.firstChild);
+    while (todoTable.childNodes.length > 2) {
+        todoTable.removeChild(todoTable.lastChild);
     }
 
     //add all elements
@@ -80,11 +77,23 @@ let updateTodoList = function() {
         (todoList[todo].title.includes(filterInput.value)) ||
         (todoList[todo].description.includes(filterInput.value))
     ) {
-        let newElement = document.createElement("p");
-        let newContent = document.createTextNode(todoList[todo].title + " " +
-                                                todoList[todo].description);
-        newElement.appendChild(newContent);
-        todoListDiv.appendChild(newElement);
+            let newRow = document.createElement("tr");
+            
+            let dueDateCell = document.createElement("td");
+            dueDateCell.appendChild(document.createTextNode(todoList[todo].dueDate));
+            newRow.appendChild(dueDateCell);
+
+            let placeCell = document.createElement("td");
+            placeCell.appendChild(document.createTextNode(todoList[todo].place));
+            newRow.appendChild(placeCell);
+
+            let descriptionCell = document.createElement("td");
+            descriptionCell.appendChild(document.createTextNode(todoList[todo].description));
+            newRow.appendChild(descriptionCell);
+
+            let titleCell = document.createElement("td");
+            titleCell.appendChild(document.createTextNode(todoList[todo].title));
+            newRow.appendChild(titleCell);
 
             let newDeleteButton = document.createElement("input");
             newDeleteButton.type = "button";
@@ -94,12 +103,17 @@ let updateTodoList = function() {
                     deleteTodo(todo);
                 });
 
-            newElement.appendChild(newDeleteButton);
+            let buttonCell = document.createElement("td");
+            buttonCell.appendChild(newDeleteButton);
+
+            newRow.appendChild(buttonCell);
+
+            todoTable.appendChild(newRow);
         }
     }
 }
 
-setInterval(updateTodoList, 5000);
+setInterval(updateTodoTable, 5000);
 
 let deleteTodo = function(index) {
     todoList.splice(index,1);
