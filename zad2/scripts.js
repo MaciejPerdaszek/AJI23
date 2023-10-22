@@ -70,11 +70,17 @@ let updateTodoTable = function() {
 
     //add all elements
     let filterInput = document.getElementById("inputSearch");   
+    let dateFromFilterInput = document.getElementById("inputSearchDateFrom");   
+    let dateToFilterInput = document.getElementById("inputSearchDateTo");   
     for (let todo in todoList) {
     if (
-        (filterInput.value == "") ||
+        ((filterInput.value == "") ||
         (todoList[todo].title.includes(filterInput.value)) ||
-        (todoList[todo].description.includes(filterInput.value))
+        (todoList[todo].description.includes(filterInput.value)))
+        &&
+        (((dateFromFilterInput.value == "") || (dateToFilterInput.value == "")) ||
+        ((new Date(todoList[todo].dueDate) >= new Date(dateFromFilterInput.value)) &&
+        (new Date(todoList[todo].dueDate) <= new Date(dateToFilterInput.value))))
     ) {
             let newRow = document.createElement("tr");
            
