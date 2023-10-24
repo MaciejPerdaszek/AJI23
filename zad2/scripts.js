@@ -1,31 +1,9 @@
-"use strict"
+"use strict";
 let todoList = []; //declares a new array for Your todo list
-
-let initList = function() {
-    let savedList = window.localStorage.getItem("todos");
-    if (savedList != null)
-        todoList = JSON.parse(savedList);
-    else
-    //code creating a default list with 2 items
-    todoList.push(
-    {
-        title: "Learn JS",
-        description: "Create a demo application for my TODO's",
-        place: "445",
-        dueDate: new Date(2019,10,16)
-    },
-    {
-        title: "Lecture test",
-        description: "Quick test from the first three lectures",
-        place: "F6",
-        dueDate: new Date(2019,10,17)
-    }
-        // of course the lecture test mentioned above will not take place
-    );
-}
 
 const BASE_URL = "https://api.jsonbin.io/v3/b/652edd3c54105e766fc394eb";
 const SECRET_KEY = "$2a$10$hD8KF5mw26NxxCFfdm3Sfeh5epXb6c/pEbt28CP0jorrvLqMuRz/C";
+
 $.ajax({
  // copy Your bin identifier here. It can be obtained in the dashboard
  url: BASE_URL,
@@ -61,59 +39,47 @@ let updateJSONbin = function() {
 }
 
 let updateTodoTable = function() {
-    let todoTable = document.getElementById("tBodyID");
+    let todoTable = $("#todoTableView").find("tbody");
 
     //remove all elements
-    while (todoTable.firstChild) {
-        todoTable.removeChild(todoTable.firstChild);
-    }
+    todoTable.empty();
 
     //add all elements
-    let filterInput = document.getElementById("inputSearch");   
-    let dateFromFilterInput = document.getElementById("inputSearchDateFrom");   
-    let dateToFilterInput = document.getElementById("inputSearchDateTo");   
+    let filterInput = $("#inputSearch").val().toLowerCase(); 
+    let dateFromFilterInput = $("#inputSearchDateFrom");   
+    let dateToFilterInput = $("#inputSearchDateTo");   
+    
     for (let todo in todoList) {
-    if (
-        ((filterInput.value == "") ||
-        (todoList[todo].title.includes(filterInput.value)) ||
-        (todoList[todo].description.includes(filterInput.value)))
-        &&
-        (((dateFromFilterInput.value == "") || (dateToFilterInput.value == "")) ||
-        ((new Date(todoList[todo].dueDate) >= new Date(dateFromFilterInput.value)) &&
-        (new Date(todoList[todo].dueDate) <= new Date(dateToFilterInput.value))))
-    ) {
-            let newRow = document.createElement("tr");
+      if (
+          ((filterInput == "") ||
+          (todoList[todo].title.toLowerCase().includes(filterInput)) ||
+          (todoList[todo].description.toLowerCase().includes(filterInput)))
+          &&
+          (((dateFromFilterInput.val() == "") || (dateToFilterInput.val() == "")) ||
+          ((new Date(todoList[todo].dueDate) >= new Date(dateFromFilterInput.val())) &&
+          (new Date(todoList[todo].dueDate) <= new Date(dateToFilterInput.val()))))
+      ) {
+            let newRow = $("<tr>");
            
-            let dueDateCell = document.createElement("td");
-            dueDateCell.appendChild(document.createTextNode(todoList[todo].dueDate));
-            newRow.appendChild(dueDateCell);
-
-            let placeCell = document.createElement("td");
-            placeCell.appendChild(document.createTextNode(todoList[todo].place));
-            newRow.appendChild(placeCell);
-
-            let descriptionCell = document.createElement("td");
-            descriptionCell.appendChild(document.createTextNode(todoList[todo].description));
-            newRow.appendChild(descriptionCell);
-
-            let titleCell = document.createElement("td");
-            titleCell.appendChild(document.createTextNode(todoList[todo].title));
-            newRow.appendChild(titleCell);
-
-            let newDeleteButton = document.createElement("input");
-            newDeleteButton.type = "button";
-            newDeleteButton.className = "btn btn-danger ";
-            newDeleteButton.value = "x";
-            newDeleteButton.addEventListener("click",
-                function() {
-                    deleteTodo(todo);
-                });
+            newRow.append($("<td>").text(todoList[todo].dueDate));
+            newRow.append($("<td>").text(todoList[todo].place));
+            newRow.append($("<td>").text(todoList[todo].description));
+            newRow.append($("<td>").text(todoList[todo].title));
             
-            let buttonCell = document.createElement("td");
-            buttonCell.appendChild(newDeleteButton);
-            newRow.appendChild(buttonCell);
+            let newDeleteButton = $("<input>");
+            newDeleteButton
+              .attr("type", "button")
+              .addClass("btn btn-danger")
+              .val("x")
+              .on('click', function() { 
+                deleteTodo(todo);
+              });
+                
+            let buttonCell = $("<td>");
+            buttonCell.append(newDeleteButton);
 
-            todoTable.appendChild(newRow);
+            newRow.append(buttonCell);
+            todoTable.append(newRow);
         }
     }
 }
@@ -127,24 +93,18 @@ let deleteTodo = function(index) {
 
 let addTodo = function() {
     //get the elements in the form
-      let inputTitle = document.getElementById("inputTitle");
-      let inputDescription = document.getElementById("inputDescription");
-      let inputPlace = document.getElementById("inputPlace");
-      let inputDate = document.getElementById("inputDate");
-    //get the values from the form
-      let newTitle = inputTitle.value;
-      let newDescription = inputDescription.value;
-      let newPlace = inputPlace.value;
-      let newDate = new Date(inputDate.value);
+      let inputTitle = $("#inputTitle");
+      let inputDescription = $("#inputDescription");
+      let inputPlace = $("#inputPlace");
+      let inputDate = $("#inputDate");
     //create new item
       let newTodo = {
-          title: newTitle,
-          description: newDescription,
-          place: newPlace,
-          dueDate: newDate
+          title: inputTitle.val(),
+          description: inputDescription.val(),
+          place: inputPlace.val(),
+          dueDate: inputDate.val()
       };
     //add item to the list
       todoList.push(newTodo);
-      //window.localStorage.setItem("todos", JSON.stringify(todoList));
       updateJSONbin();
   }
