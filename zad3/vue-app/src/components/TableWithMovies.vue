@@ -1,5 +1,5 @@
 <template>  
-  <table class=" table-condensed table-hover ">
+  <table class="table table-condensed table-hover">
         <thead>
           <tr>
             <th>Title</th>
@@ -9,18 +9,47 @@
           </tr>
         </thead>
         <tbody>
-            <tr v-for="movie in movies" :key="movie.id">
+            <tr v-for="movie in moviesToDisplay" :key="movie.id">
                 <td>{{ movie.title }}</td>
-                <td>{{ movie.productionYear }}</td>
-                <td>{{ movie.cast }}</td>
-                <td>{{ movie.genres }}</td>
+                <td>{{ movie.year }}</td>
+                <td>{{ movie.cast.join(', ') }}</td>
+                <td>{{ movie.genres.join(', ') }}</td>
             </tr>
         </tbody>
       </table>
-      <em class="task">W tabeli należy poprawić wyświetlanie pól z obsadą i gatunkiem. Należy opuścić nawiasy kwadratowe</em>
+      <div>
+           <button class="btn btn-info text-white" @click="showNextTen">Pokaż więcej</button>
+      </div>
 </template>
 
 <script>
+import json from '../assets/movies.json';
+//import _ from 'underscore';
+export default {
+  data() {
+    return {
+      movies : json,
+      moviesToDisplay: [],
+    }
+  },
+
+  methods: {
+    displayTenMovies(initialPosition, finalPosition) {
+      for(let i = initialPosition; i < finalPosition; i++) {
+        this.moviesToDisplay.push(this.movies[i]);
+      }
+     
+    },
+
+    showNextTen() {
+      this.displayTenMovies(this.moviesToDisplay.length, this.moviesToDisplay.length + 10);
+    },
+  },
+
+  mounted() {
+    this.displayTenMovies(0, 10);
+  },
+}
 </script>
 
 <style scoped>
