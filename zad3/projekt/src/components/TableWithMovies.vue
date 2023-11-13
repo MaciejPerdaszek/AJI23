@@ -24,7 +24,6 @@
 
 <script>
 import json from '../assets/movies.json';
-//import _ from 'underscore';
 export default {
   data() {
     return {
