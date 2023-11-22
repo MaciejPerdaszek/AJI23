@@ -1,13 +1,14 @@
 <template>
   <div id="app" class="container">
-    <SearchEngine/>
-    <TableWithMovies/>
+    <SearchEngine @search="getFilterEvent"/>
+    <TableWithMovies :filter="filter" ref="tmovies"/>
     <MoviesByGenre/>
     <MoviesByCast/>
   </div>
 </template>
 
 <script>
+
 import SearchEngine from './components/SearchEngine.vue'
 import TableWithMovies from './components/TableWithMovies.vue'
 import MoviesByGenre from './components/MoviesByGenre.vue'
@@ -20,6 +21,23 @@ export default {
     TableWithMovies,
     MoviesByGenre,
     MoviesByCast,
+  },
+  data() {
+    return {
+      filter: {
+        title: '',
+        productionFrom: '',
+        productionTo: '',
+        cast: ''
+      },
+    };
+  },
+  methods: {
+    getFilterEvent(data) {
+      console.log(data);
+      this.filter = data;
+      this.$refs.tmovies.displayTenMovies(10);
+    },
   }
 }
 </script>

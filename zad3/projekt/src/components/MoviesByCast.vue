@@ -1,7 +1,6 @@
 <template>  
   <h1>Filmy wg obsady</h1>
       <em class="task">
-        Należy wyświetlić filmografię wg obsady w formie jak w poprzednim punkcie. Jeśli jest kilku aktorów w jednym filmie, należy wyświetlić ich oddzielnie.
         <div v-for="(movies, actor) in actors" :key="actor">
           <p>{{ actor }}</p>
           <ol>
