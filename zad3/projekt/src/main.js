@@ -4,10 +4,12 @@ import App from './App.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap'
 import _ from 'underscore'
-import $ from "jquery";
+
+const app = createApp(App)
+app.config.globalProperties._ = _
+app.mount('#app')
 
 
-createApp(App).use(_).use($).mount('#app')
 
 
 

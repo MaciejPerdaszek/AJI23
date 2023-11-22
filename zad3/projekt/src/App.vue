@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     getFilterEvent(data) {
-      console.log(data);
+      //console.log(data);
       this.filter = data;
       this.$refs.tmovies.displayTenMovies(10);
     },

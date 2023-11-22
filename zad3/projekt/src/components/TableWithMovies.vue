@@ -24,6 +24,7 @@
 
 <script>
 import json from '../assets/movies.json';
+import _ from 'underscore';
 
 export default {
   props: {
@@ -38,30 +39,21 @@ export default {
 
   methods: {
     displayTenMovies(finalPosition) {
-      this.moviesToDisplay = [];
-      let moviesShown = 0;
-      for(let i = 30000; i < 50000; i++) {
-        if(this.filter != null) {
-          if(this.filter.title != "" && !this.movies[i].title.toLowerCase().includes(this.filter.title.toLowerCase())) {
-            continue;
-          }
-          if(this.filter.productionTo != "" && parseInt(this.movies[i].year) > parseInt(this.filter.productionTo)) {
-            continue;
-          }
-          if(this.filter.productionFrom != "" && parseInt(this.movies[i].year) < parseInt(this.filter.productionFrom)) {
-            continue;
-          }
-          if(this.filter.cast != "" && !this.movies[i].cast.toString().includes(this.filter.cast)) {
-            continue;
-          }
+      this.moviesToDisplay = _.filter(this.movies.slice(0, 1000), (movie) => {
+      if (this.filter != null) {
+        if (
+         (this.filter.title != "" && !movie.title.toLowerCase().includes(this.filter.title.toLowerCase())) ||
+         (this.filter.productionTo != "" && (parseInt(movie.year) > parseInt(this.filter.productionTo))) ||
+         (this.filter.productionFrom != "" && (parseInt(movie.year) < parseInt(this.filter.productionFrom))) ||
+          (this.filter.cast != "" && !movie.cast.toString().toLowerCase().includes(this.filter.cast.toLowerCase()))
+        ) {
+         return false;
         }
-        this.moviesToDisplay.push(this.movies[i]);
-        moviesShown++;
-        if(moviesShown == finalPosition) {
-          break;
-        }
-      }     
-    },
+      }
+      return true;
+    }).slice(0, finalPosition);
+  },
+
 
     showNextTen() {
       this.displayTenMovies(this.moviesToDisplay.length + 10);
