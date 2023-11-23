@@ -11,13 +11,12 @@
 </template>
 
 <script>
-//import _ from 'underscore';
-import json from '../assets/movies.json';
-
 export default {
+  props: {
+    movies: Array,
+  },
   data() {
     return {
-      movies : json,
       actors: {},
     }
   },
@@ -32,7 +31,6 @@ export default {
         }
         i++;
       }
-      //selectedMovies = _.groupBy(selectedMovies, 'cast');
       selectedMovies.forEach(movie => {
         movie.cast.forEach(actor => {
           if(this.actors[actor]) {

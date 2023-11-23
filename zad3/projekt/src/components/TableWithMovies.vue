@@ -23,23 +23,22 @@
 </template>
 
 <script>
-import json from '../assets/movies.json';
 import _ from 'underscore';
 
 export default {
   props: {
     filter: Object,
+    movies: Array,
   },
   data() {
     return {
-      movies : json,
       moviesToDisplay: [],
     }
   },
 
   methods: {
     displayTenMovies(finalPosition) {
-      this.moviesToDisplay = _.filter(this.movies.slice(0, 1000), (movie) => {
+      this.moviesToDisplay = _.filter(this.movies, (movie) => {
       if (this.filter != null) {
         if (
          (this.filter.title != "" && !movie.title.toLowerCase().includes(this.filter.title.toLowerCase())) ||

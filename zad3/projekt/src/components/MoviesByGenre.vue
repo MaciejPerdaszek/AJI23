@@ -11,11 +11,12 @@
 </template>
 
 <script>
-import json from '../assets/movies.json';
 export default {
+  props: {
+    movies: Array,
+  },
   data() {
     return {
-      movies : json,
       genres: {},
     }
   },

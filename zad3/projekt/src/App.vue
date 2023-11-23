@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="container">
     <SearchEngine @search="getFilterEvent"/>
-    <TableWithMovies :filter="filter" ref="tmovies"/>
-    <MoviesByGenre/>
-    <MoviesByCast/>
+    <TableWithMovies :filter="filter" :movies="movies" ref="tmovies"/>
+    <MoviesByGenre :movies="movies"/>
+    <MoviesByCast :movies="movies"/>
   </div>
 </template>
 
@@ -13,6 +13,8 @@ import SearchEngine from './components/SearchEngine.vue'
 import TableWithMovies from './components/TableWithMovies.vue'
 import MoviesByGenre from './components/MoviesByGenre.vue'
 import MoviesByCast from './components/MoviesByCast.vue'
+
+import json from './assets/movies.json';
 
 export default {
   name: 'App',
@@ -30,11 +32,11 @@ export default {
         productionTo: '',
         cast: ''
       },
+      movies : json.slice(25000, 35000),
     };
   },
   methods: {
     getFilterEvent(data) {
-      //console.log(data);
       this.filter = data;
       this.$refs.tmovies.displayTenMovies(10);
     },
