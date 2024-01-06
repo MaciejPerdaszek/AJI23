@@ -1,24 +1,17 @@
 const express = require('express')
 const router = express.Router()
+const orderController = require('../controllers/ordersController');
 
 // return all orders
-router.get('/', (req, res) => {
-    
-})
+router.get('/', orderController.getOrders)
 
 // add new order
-router.post('/', (req, res) => {
-    
-})
+router.post('/', orderController.createOrder)
 
 // change order status with given id
-router.patch('/id', (req, res) => {
-    
-})
+router.put('/:id', orderController.updateOrder)
 
 // return orders with given status
-router.get('/status', (req, res) => {
-    
-})
+router.get('/status/:id', orderController.getOrdersbyStatus)
   
 module.exports = router

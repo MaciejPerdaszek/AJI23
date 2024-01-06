@@ -20,7 +20,7 @@ module.exports.create = (product) => {
       weight: product.weight,
       idcategory: product.idcategory,
   }).save();
-};
+}
 
 module.exports.findbyIdAndUpdate = (id, updateData) => {
    return new Product({'id':id}).save(updateData, {patch: true});
