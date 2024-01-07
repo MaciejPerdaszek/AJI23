@@ -1,9 +1,10 @@
-const Category = require('../models/catetoryModel');
+const Category = require('../models/categoryModel');
+const {StatusCodes} = require('http-status-codes');
 
 exports.getCategories = (req, res) => {
     Category.getAll().then(
         function(allCategories) {
-            res.json(allCategories);
+            res.status(StatusCodes.OK).json(allCategories);
         }
     );
 }

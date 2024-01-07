@@ -10,8 +10,11 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+const {StatusCodes, ReasonPhrases, getReasonPhrase} = require('http-status-codes');
+
+
 app.get('/', (req, res) => {
-  res.json({'status':'working!'});
+  res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))
 })
 
 app.use(bodyParser.json());

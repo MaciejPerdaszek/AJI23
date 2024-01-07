@@ -1,9 +1,12 @@
-const Status = require('../models/statusModel');
+const {StatusCodes} = require('http-status-codes');
 
 exports.getStatuses = (req, res) => {
-    Status.getAll().then(
-        function(allStatuses) {
-            res.json(allStatuses);
-        }
-    );
+    res.status(StatusCodes.OK).json(statuses);
+}
+exports.statuses = {
+    'NEW': 1,
+    'PAID': 2,
+    'SENT': 3,
+    'DELIVERED': 4,
+    'CANCELED': 5
 }
