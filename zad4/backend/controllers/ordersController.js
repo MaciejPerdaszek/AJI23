@@ -84,7 +84,6 @@ const validateNewOrder = async (order, res) => {
         res.status(StatusCodes.BAD_REQUEST).json({ error: 'Username cannot be empty' });
         return false;
     }
-    console.log(order.products.length);
     for (let product of order.products) {
         if(product.product_id == null || product.amount == null) {
             res.status(StatusCodes.BAD_REQUEST).json({ error: 'Product variables cannot be null' });
