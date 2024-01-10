@@ -1,0 +1,31 @@
+nav {
+    background-color: #e2e6ea;
+    padding: 200px;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+}
+
+nav li {
+    margin-right: 25px;
+    color: #4f5860;
+    cursor: pointer;
+}
+
+nav li:hover {
+    text-decoration: underline;
+}
+
+nav img {
+    margin-right: 30px;
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+.nav-link-unstyled {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}

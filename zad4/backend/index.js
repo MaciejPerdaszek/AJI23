@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 4000
 
 const productsRouter = require('./routes/products')
 const categoriesRouter = require('./routes/categories')
@@ -9,6 +9,7 @@ const statusRouter = require('./routes/status')
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+var cors = require("cors");
 
 const {StatusCodes, ReasonPhrases, getReasonPhrase} = require('http-status-codes');
 
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
   res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))
 })
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
