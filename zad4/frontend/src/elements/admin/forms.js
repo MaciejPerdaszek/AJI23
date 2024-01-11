@@ -4,13 +4,19 @@ import {Modal, Button, Form} from "react-bootstrap";
 function handleSubmit_editProduct(event) {
     event.preventDefault();
     const form = event.target;
-    let data = new FormData(form);
-    data = Object.fromEntries(data);
-    console.log(data);
-
+    const data = new FormData(form); 
     fetch("http://localhost:4000/products/" + data.get("id"), {
         method: "PUT",
-        body: data,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name: data.get("name"),
+            description: data.get("description"),
+            price: data.get("price"),
+            weight: data.get("weight"),
+            idcategory: data.get("idcategory")
+        }),
     }).then((response) => {
         if (response.ok) {
             alert("Product edited successfully!");
@@ -30,26 +36,31 @@ export function renderEditProductForm(showEditProductForm, setShowEditProductFor
             <Modal.Body>
                 <Form onSubmit={(event) => handleSubmit_editProduct(event)}>
                     <Form.Group controlId="productId">
-                        <Form.Control type="text" defaultValue={product.id} />
+                        <Form.Control name="id" type="text" defaultValue={product.id} />
                     </Form.Group>
                     <Form.Group controlId="productName">
                         <Form.Label>Product Name:</Form.Label>
-                        <Form.Control type="text" defaultValue={product.name} />
+                        <Form.Control name="name" type="text" defaultValue={product.name} />
                     </Form.Group>
                     
                     <Form.Group controlId="productDescription">
                         <Form.Label>Product Description:</Form.Label>
-                        <Form.Control type="text" defaultValue={product.description} />
+                        <Form.Control name="description" type="text" defaultValue={product.description} />
                     </Form.Group>
 
                     <Form.Group controlId="productPrice">
                         <Form.Label>Product Price:</Form.Label>
-                        <Form.Control type="number" defaultValue={product.price} />
+                        <Form.Control name="price" type="number" defaultValue={product.price} />
+                    </Form.Group>
+
+                    <Form.Group controlId="productWeight">
+                        <Form.Label>Product Weight:</Form.Label>
+                        <Form.Control name="weight" type="number" defaultValue={product.weight} />
                     </Form.Group>
 
                     <Form.Group controlId="productCategory">
                         <Form.Label>Product Category ID:</Form.Label>
-                        <Form.Control type="text" defaultValue={product.category.idcategory}/>
+                        <Form.Control name="idcategory" type="number" defaultValue={product.category.idcategory}/>
                     </Form.Group>
 
                     <Button variant="primary" type="submit">

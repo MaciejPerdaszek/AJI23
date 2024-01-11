@@ -28,7 +28,7 @@ exports.addProduct = (req, res) => {
             'idcategory': productVars.idcategory,
         }).then(newProductId => {
             if (newProductId == null) {
-                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Error while creating product' });
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Error while creating product (newProductId == null)' });
             }
             res.status(StatusCodes.CREATED).json({newProductId: newProductId}); }
         );
@@ -42,14 +42,13 @@ exports.updateProduct = (req, res) => {
     if(validateProduct(productVars, res)) {
         Product.getById(productId).then(
             (product) => {
-                
                 if (product == null) {
                     return res.status(StatusCodes.NOT_FOUND).json({ error: 'Product not found' });
                 }
                     Product.update(productId, productVars)
                 .then((productId) => {
                     if(productId == null) {
-                        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Error while updating product' });
+                        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Error while updating product (productId == null)' });
                     }
                     res.status(StatusCodes.ACCEPTED).json(productId);
                 });
