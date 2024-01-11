@@ -2,9 +2,10 @@ const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
 const OrderProduct = require('../models/orderProductModel');
 
-const statuses = require('./statusController').statuses;
+const {statuses} = require('./statusController')
 
 const {StatusCodes} = require('http-status-codes');
+const { json } = require('body-parser');
 
 exports.getOrders = (req, res) => {
     Order.getAll().then(
@@ -41,19 +42,18 @@ exports.createOrder = (req, res) => {
 exports.updateOrder = (req, res) => {
     let orderId = req.params.id;
     let orderVars = req.body;
-    const oldOrder = Order.getById(orderId).then(
-        (order) => {
+    Order.getById(orderId).then(
+        async (order) => {
             if (!order) {
                 return res.status(StatusCodes.NOT_FOUND).json({ error: 'Order not found' });
             }
-        });
-    if(validateUpdateOrder(oldOrder, orderVars, res)) {
-        Order.update(orderId, orderVars)
-        .then((orderId) => {
-            res.status(StatusCodes.ACCEPTED).json(orderId);
+            let updateValidate = await validateUpdateOrder(order.toJSON(), orderVars, res);
+            if(updateValidate) {
+                Order.update(orderId, orderVars);
+                res.status(StatusCodes.ACCEPTED).json(orderId);
+            }
         });
     }
-}
 
 exports.getOrdersbyStatus = (req, res) => {
     Order.getOrdersByStatus(req.params.id).then(
@@ -106,13 +106,15 @@ const validateNewOrder = async (order, res) => {
         if(!await validateNewOrder(newOrder, res)) {
             return false;
         }
-        if(oldOrder.status == statuses.CANCELED) {
+        else if(oldOrder.status == statuses.CANCELED) {
             res.status(StatusCodes.BAD_REQUEST).json({ error: 'Order was canceled and cannot be updated' });
             return false;
         }
-        if(oldOrder.status > newOrder.status) {
+        else if(oldOrder.status > newOrder.status) {
             res.status(StatusCodes.BAD_REQUEST).json({ error: 'Order status cannot be downgraded' });
             return false;
         }
-        return true;
+        else {
+            return true;
+        }
     }

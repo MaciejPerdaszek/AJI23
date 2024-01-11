@@ -21,8 +21,11 @@ function handleSubmit_editProduct(event) {
         if (response.ok) {
             alert("Product edited successfully!");
             window.location.reload();
-        } else {
-            alert("Error editing product!");
+        }  else {
+            response.json().then((data) => {
+                alert("Error editing product: " + data.error);
+                window.location.reload();
+            });
         }
     });
 }
