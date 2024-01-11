@@ -33,18 +33,18 @@ export default function MainPage({ onAddToCart }) {
 
     return (
         <div className="MainPage">
-            <div class="container mt-4">
-                <div class="form-group row">
-                    <label for="search" class="col-sm-2 col-form-label">Search:</label>
-                    <div class="col-sm-6">
-                        <input class="form-control mb-2" type="text" id="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <div className="container mt-4">
+                <div className="form-group row">
+                    <label htmlFor="search" className="col-sm-2 col-form-label">Search:</label>
+                    <div className="col-sm-6">
+                        <input className="form-control mb-2" type="text" id="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label for="category" class="col-sm-2 col-form-label">Select category:</label>
-                    <div class="col-sm-6">
-                        <select class="form-control mb-2" id="category" value={selectedCategory || ''} onChange={(e) => setSelectedCategory(e.target.value === '' ? null : parseInt(e.target.value, 10))}>
+                <div className="form-group row">
+                    <label htmlFor="category" className="col-sm-2 col-form-label">Select category:</label>
+                    <div className="col-sm-6">
+                        <select className="form-control mb-2" id="category" value={selectedCategory || ''} onChange={(e) => setSelectedCategory(e.target.value === '' ? null : parseInt(e.target.value, 10))}>
                             <option value="">All Categories</option>
                             {categoriesList.map((category) => (
                                 <option key={category.idcategory} value={category.idcategory}>

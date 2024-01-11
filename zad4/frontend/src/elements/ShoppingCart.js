@@ -133,38 +133,38 @@ export default function ShoppingCart({ list }) {
                     </tbody>
                 </table>
             </div>
-            <div class="text-right float-right">
+            <div className="text-right float-right">
                 <h4>Total Price: {calculateTotalPrice()}</h4>
             </div>
             <hr></hr>
-            <div class="container mt-3">
-                <p class="text-center">Fill in the form below to submit your order.</p>
-                <div class="d-flex justify-content-center">
-                    <form ref={formRef} class="w-50">
-                        <div class="form-group row mb-3">
-                            <label for="name" class="col-sm-2 col-form-label">Name:</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="name" placeholder="exampleuser" required />
+            <div className="container mt-3">
+                <p className="text-center">Fill in the form below to submit your order.</p>
+                <div className="d-flex justify-content-center">
+                    <form ref={formRef} className="w-50">
+                        <div className="form-group row mb-3">
+                            <label htmlFor="name" className="col-sm-2 col-form-label">Name:</label>
+                            <div className="col-sm-6">
+                                <input type="text" className="form-control" id="name" placeholder="exampleuser" required />
                             </div>
                         </div>
 
-                        <div class="form-group row mb-3">
-                            <label for="email" class="col-sm-2 col-form-label">Email:</label>
-                            <div class="col-sm-6">
-                                <input type="email" class="form-control" id="email" placeholder="example@gmail.com" required />
+                        <div className="form-group row mb-3">
+                            <label htmlFor="email" className="col-sm-2 col-form-label">Email:</label>
+                            <div className="col-sm-6">
+                                <input type="email" className="form-control" id="email" placeholder="example@gmail.com" required />
                             </div>
                         </div>
 
-                        <div class="form-group row mb-3">
-                            <label for="phone" class="col-sm-2 col-form-label">Phone:</label>
-                            <div class="col-sm-6">
-                                <input type="tel" class="form-control" id="phone" pattern="[0-9]{9}" placeholder="123456789" required />
+                        <div className="form-group row mb-3">
+                            <label htmlFor="phone" className="col-sm-2 col-form-label">Phone:</label>
+                            <div className="col-sm-6">
+                                <input type="tel" className="form-control" id="phone" pattern="[0-9]{9}" placeholder="123456789" required />
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-6 offset-sm-2">
-                                <button class="btn btn-primary" onClick={submitOrder}>Submit</button>
+                        <div className="form-group row">
+                            <div className="col-sm-6 offset-sm-2">
+                                <button className="btn btn-primary" onClick={submitOrder}>Submit</button>
                             </div>
                         </div>
                     </form>
