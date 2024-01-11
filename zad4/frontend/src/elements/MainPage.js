@@ -1,7 +1,7 @@
 import React from "react";
 import '../styling/MainPage.css';
 
-export default function MainPage({onAddToCart}) {
+export default function MainPage({ onAddToCart }) {
 
     const [productsList, setProductsList] = React.useState([]);
     const [productsCart, setProductCart] = React.useState([]);
@@ -33,28 +33,27 @@ export default function MainPage({onAddToCart}) {
 
     return (
         <div className="MainPage">
-            <div className="row pb-5">
-                <div className="col-md-12">
-                    <div id="titleOnMainPage">
-                        <h1 className="p-5">Product browser</h1>
+            <div class="container mt-4">
+                <div class="form-group row">
+                    <label for="search" class="col-sm-2 col-form-label">Search:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control mb-2" type="text" id="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                     </div>
                 </div>
-            </div>
-            
-            <div>
-                <label htmlFor="search">Search:</label>
-                    <input type="text" id="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
-            </div>
-            <div>
-                <label htmlFor="category">Select category:</label>
-                    <select id="category" value={selectedCategory || ''} onChange={(e) => setSelectedCategory(e.target.value === '' ? null : parseInt(e.target.value, 10))}>
-                        <option value="">All Categories</option>
-                        {categoriesList.map((category) => (
-                            <option key={category.idcategory} value={category.idcategory}>
-                                {category.name}
-                            </option>
-                        ))}
-                    </select>
+
+                <div class="form-group row">
+                    <label for="category" class="col-sm-2 col-form-label">Select category:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control mb-2" id="category" value={selectedCategory || ''} onChange={(e) => setSelectedCategory(e.target.value === '' ? null : parseInt(e.target.value, 10))}>
+                            <option value="">All Categories</option>
+                            {categoriesList.map((category) => (
+                                <option key={category.idcategory} value={category.idcategory}>
+                                    {category.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
             </div>
             <div className="productsTable">
                 <table className="table table-striped">
@@ -69,26 +68,26 @@ export default function MainPage({onAddToCart}) {
                     </thead>
                     <tbody>
                         {productsList
-                        .filter((product) =>
-                            product.name.toLowerCase().includes(searchTerm.toLowerCase())
-                        )
-                        .filter((product) =>
-                            selectedCategory ? product.idcategory === selectedCategory : true
-                        )
-                        .map((product, index) => (
-                            <tr key={index}>
-                                <td>{product.name}</td>
-                                <td>{product.description}</td>
-                                <td>{product.price}</td>
-                                <td>{product.category.name}</td>
-                                <td>
-                                    <button className="btn btn-primary" onClick={() => {
-                                        const newProductsCart = [...productsCart, product];
-                                        setProductCart(newProductsCart);
-                                    }}>Add to cart</button>
-                                </td>
-                            </tr>
-                        ))}
+                            .filter((product) =>
+                                product.name.toLowerCase().includes(searchTerm.toLowerCase())
+                            )
+                            .filter((product) =>
+                                selectedCategory ? product.idcategory === selectedCategory : true
+                            )
+                            .map((product, index) => (
+                                <tr key={index}>
+                                    <td>{product.name}</td>
+                                    <td>{product.description}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.category.name}</td>
+                                    <td>
+                                        <button className="btn btn-primary" onClick={() => {
+                                            const newProductsCart = [...productsCart, product];
+                                            setProductCart(newProductsCart);
+                                        }}>Add to cart</button>
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
 

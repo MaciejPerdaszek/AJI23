@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import './styling/App.css';
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import NavBar from "./elements/NavBar";
 import MainPage from "./elements/MainPage"
 import ShoppingCart from "./elements/ShoppingCart"
@@ -19,12 +19,12 @@ const AppContent = () => {
       <NavBar />
       <Routes>
         <Route path="/" element={<MainPage onAddToCart={handleAddToCart} />} />
-        <Route path="/shopping-cart" element={<ShoppingCart list={cartList}/>} />
+        <Route path="/shopping-cart" element={<ShoppingCart list={cartList} />} />
       </Routes>
     </div>
   );
 };
-  
+
 
 class App extends Component {
   constructor(props) {

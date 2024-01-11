@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import '../styling/MainPage.css';
 import { useNavigate } from "react-router-dom";
 
-export default function ShoppingCart({list}) {
+export default function ShoppingCart({ list }) {
 
     const [amounts, setAmounts] = React.useState({});
     const formRef = useRef(null);
@@ -10,30 +10,30 @@ export default function ShoppingCart({list}) {
 
     const handleIncrement = (productId) => {
         setAmounts((prevAmounts) => ({
-          ...prevAmounts,
-          [productId]: prevAmounts[productId] + 1,
+            ...prevAmounts,
+            [productId]: prevAmounts[productId] + 1,
         }));
-      }; 
-    
-      const handleDecrement = (productId) => {
-        setAmounts((prevAmounts) => ({
-          ...prevAmounts,
-          [productId]: Math.max(0, prevAmounts[productId] - 1),
-        }));
-      };
+    };
 
-      const handleRemove = (productId ,index) => {
+    const handleDecrement = (productId) => {
+        setAmounts((prevAmounts) => ({
+            ...prevAmounts,
+            [productId]: Math.max(0, prevAmounts[productId] - 1),
+        }));
+    };
+
+    const handleRemove = (productId, index) => {
         const newProductsCart = [...list];
         newProductsCart.splice(index, 1);
         setAmounts((prevAmounts) => {
-            const newAmounts = {...prevAmounts};
+            const newAmounts = { ...prevAmounts };
             delete newAmounts[productId];
             return newAmounts;
         });
         list.splice(index, 1);
-      }
+    }
 
-    const calclulateTotalPrice = () => {
+    const calculateTotalPrice = () => {
         let totalPrice = 0;
         list.forEach((product) => {
             totalPrice += product.price * amounts[product.id];
@@ -72,44 +72,37 @@ export default function ShoppingCart({list}) {
                 },
                 body: JSON.stringify(order),
             })
-            .then((response) => response.json())
-            .then((data) => {
-                navigate('/');
-                console.log("Order submitted successfully");
-                
-            })
-        } else {
-          formRef.current.reportValidity();
-          console.log("Form is invalid!");
-        }
-      };
+                .then((response) => response.json())
+                .then((data) => {
+                    navigate('/');
+                    console.log("Order submitted successfully");
 
-      const formatDate = (date) => {
+                })
+        } else {
+            formRef.current.reportValidity();
+            console.log("Form is invalid!");
+        }
+    };
+
+    const formatDate = (date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     };
-    
-        
+
+
     React.useEffect(() => {
         const initialAmounts = {};
         list.forEach((product) => {
             initialAmounts[product.id] = 1;
         });
         setAmounts(initialAmounts);
-      }, [list]);
-      
+    }, [list]);
+
 
     return (
         <div className="container-fluid">
-            <div className="row pb-5">
-                <div className="col-md-12">
-                    <div id="titleOnMainPage">
-                        <h1 className="p-5">Shopping Cart</h1>
-                    </div>
-                </div>
-            </div>
             <div className="productsTable">
                 <table className="table table-striped">
                     <thead>
@@ -133,28 +126,50 @@ export default function ShoppingCart({list}) {
                                     <button className="btn btn-primary" onClick={() => handleIncrement(product.id)}>+</button>
                                 </td>
                                 <td>
-                                    <button className="btn btn-danger" onClick={() => handleRemove(product.id ,index)}>Remove from cart</button>
+                                    <button className="btn btn-danger" onClick={() => handleRemove(product.id, index)}>Remove from cart</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-            <div>
-                <h3>Total Price: {calclulateTotalPrice()}</h3>
+            <div class="text-right float-right">
+                <h4>Total Price: {calculateTotalPrice()}</h4>
             </div>
+            <hr></hr>
+            <div class="container mt-3">
+                <p class="text-center">Fill in the form below to submit your order.</p>
+                <div class="d-flex justify-content-center">
+                    <form ref={formRef} class="w-50">
+                        <div class="form-group row mb-3">
+                            <label for="name" class="col-sm-2 col-form-label">Name:</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="name" placeholder="exampleuser" required />
+                            </div>
+                        </div>
 
-            <form ref={formRef}>
-                <label htmlFor="name">Name:</label>
-                <input type="text" id="name" placeholder="exampleuser" required />
-  
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" placeholder="example@gmail.com" required />
+                        <div class="form-group row mb-3">
+                            <label for="email" class="col-sm-2 col-form-label">Email:</label>
+                            <div class="col-sm-6">
+                                <input type="email" class="form-control" id="email" placeholder="example@gmail.com" required />
+                            </div>
+                        </div>
 
-                <label htmlFor="phone">Phone:</label>
-                <input type="tel" id="phone" pattern="[0-9]{9}" placeholder="123456789" required />
-                <button className="btn btn-primary" onClick={submitOrder}>Submit</button>
-            </form>
+                        <div class="form-group row mb-3">
+                            <label for="phone" class="col-sm-2 col-form-label">Phone:</label>
+                            <div class="col-sm-6">
+                                <input type="tel" class="form-control" id="phone" pattern="[0-9]{9}" placeholder="123456789" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 offset-sm-2">
+                                <button class="btn btn-primary" onClick={submitOrder}>Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     )
 }
