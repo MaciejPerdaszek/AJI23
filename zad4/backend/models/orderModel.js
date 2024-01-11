@@ -35,7 +35,6 @@ module.exports.create = async (order) => {
         username: order.username,
         email: order.email,
         phone_number: order.phone_number,
-        amount: order.amount,
         });
         await o.save();
 

@@ -44,18 +44,25 @@ export default function ShoppingCart({list}) {
     const submitOrder = (e) => {
         e.preventDefault();
         const isFormValid = formRef.current.checkValidity();
-    
+
+        let products = [];
+        for (let product of list) {
+            products.push({
+                product_id: product.id,
+                amount: amounts[product.id],
+            });
+        }
         if (isFormValid) {
             const nameInput = document.getElementById("name");
             const emailInput = document.getElementById("email");
             const phoneInput = document.getElementById("phone");
             const order = {
-                date: new Date(),
+                date: formatDate(new Date()),
                 status: 1,
                 username: nameInput.value,
                 email: emailInput.value,
                 phone_number: phoneInput.value,
-                products: list
+                products: products
             };
             console.log(order);
             fetch("http://localhost:4000/orders", {
@@ -67,7 +74,7 @@ export default function ShoppingCart({list}) {
             })
             .then((response) => response.json())
             .then((data) => {
-                //navigate('/');
+                navigate('/');
                 console.log("Order submitted successfully");
                 
             })
@@ -76,11 +83,19 @@ export default function ShoppingCart({list}) {
           console.log("Form is invalid!");
         }
       };
+
+      const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+    
         
     React.useEffect(() => {
         const initialAmounts = {};
         list.forEach((product) => {
-            initialAmounts[product.id] = 0;
+            initialAmounts[product.id] = 1;
         });
         setAmounts(initialAmounts);
       }, [list]);
