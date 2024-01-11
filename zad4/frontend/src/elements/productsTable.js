@@ -15,11 +15,13 @@ export function renderProductTableFilter(searchTerm, setSearchTerm,
                     <div className="col-sm-6">
                         <select className="form-control mb-2" id="category" value={selectedCategory || ''} onChange={(e) => setSelectedCategory(e.target.value === '' ? null : parseInt(e.target.value, 10))}>
                             <option value="">All Categories</option>
-                            {categoriesList.map((category) => (
+                            {Array.isArray(categoriesList) ? categoriesList.map((category) => (
                                 <option key={category.idcategory} value={category.idcategory}>
                                     {category.name}
                                 </option>
-                            ))}
+                            ))
+                                : null
+                        }
                         </select>
                     </div>
                 </div>
@@ -41,7 +43,7 @@ export function renderProductsTable(productsList, searchTerm, selectedCategory, 
                         </tr>
                     </thead>
                     <tbody>
-                        {productsList
+                        {Array.isArray(productsList) ? productsList
                             .filter((product) =>
                                 product.name.toLowerCase().includes(searchTerm.toLowerCase())
                             )
@@ -49,7 +51,6 @@ export function renderProductsTable(productsList, searchTerm, selectedCategory, 
                                 selectedCategory ? product.idcategory === selectedCategory : true
                             )
                             .map((product, index) => (
-                                console.log(product),
                                 <tr key={index}>
                                     <td>{product.name}</td>
                                     <td>{product.description}</td>
@@ -59,7 +60,9 @@ export function renderProductsTable(productsList, searchTerm, selectedCategory, 
                                         {ActionButton(product)}
                                     </td>
                                 </tr>
-                            ))}
+                            ))
+                            : null
+                        }
                     </tbody>
                 </table>
 

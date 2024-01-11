@@ -4,6 +4,7 @@ import { renderProductTableFilter } from "../productsTable";
 import { renderProductsTable, renderEditProductButton } from "../productsTable";
 import '../../styling/MainPage.css';
 import { renderCurrentOrdersTable } from "./currentOrdersTable";
+import { renderOldOrdersTable } from "./ordersHistoryTable";
 
 export default function AdminPage() {
 
@@ -17,6 +18,7 @@ export default function AdminPage() {
 
     const [statusesList, setStatusesList] = React.useState({});
     const [currentOrdersList, setCurrentOrdersList] = React.useState([]);
+    const [oldOrdersList, setOldOrdersList] = React.useState([]);
 
     function getProducts() {
         fetch("http://localhost:4000/products")
@@ -43,14 +45,18 @@ export default function AdminPage() {
         fetch("http://localhost:4000/orders")
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 let current = [];
+                let old = [];
                 for(let order of data) {
                     if(order.status != 4 && order.status != 5) {
                         current.push(order);
                     }
+                    else {
+                        old.push(order);
+                    }
                 }
                 setCurrentOrdersList(current);
+                setOldOrdersList(old);
             })
             .catch(error => console.log(error));
     }
@@ -65,12 +71,17 @@ export default function AdminPage() {
 
     return (
         <div className="AdminPage">
-            {renderEditProductForm(showEditProductForm, setShowEditProductForm, productToEdit)}
+            <h1>Admin Page</h1>
+            <h2>Products</h2>
+            {renderEditProductForm(showEditProductForm, setShowEditProductForm, productToEdit, categoriesList)}
             {renderProductTableFilter(searchTerm, setSearchTerm, 
                                     selectedCategory, setSelectedCategory, 
                                     categoriesList)}
             {renderProductsTable(productsList, searchTerm, selectedCategory, renderEditProductButton(setShowEditProductForm, setProductToEdit))}
+            <h2>Current orders</h2>
             {renderCurrentOrdersTable(currentOrdersList, statusesList, productsList)}
+            <h2>Orders history</h2>
+            {renderOldOrdersTable(oldOrdersList, statusesList, productsList)}
         </div>
     )
 }

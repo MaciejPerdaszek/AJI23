@@ -10,47 +10,9 @@ function formatDate(dateText) {
     return year + '-' + month + '-' + day;
 }
 
-function handleChange_statusSelect(event, order) {
-    const value = event.target.value;
-    let orderProducts = [];
-    for (let op of order.orderProducts) {
-        orderProducts.push({
-            product_id: op.product_id,
-            amount: op.amount
-        });
-        }
-    
-    let updatedOrder = {
-        date: formatDate(order.date),
-        status: value,
-        username: order.username,
-        email: order.email,
-        phone_number: order.phone_number,
-        products: orderProducts
-    }
-
-    fetch("http://localhost:4000/orders/" + order.id, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedOrder),
-    }).then((response) => {
-        if (response.ok) {
-            alert("Order status changed successfully!");
-            window.location.reload();
-        } else {
-            response.json().then((data) => {
-                alert("Error changing order status: " + data.error);
-                window.location.reload();
-            });
-        }
-    });
-}
-
-export function renderCurrentOrdersTable(currentOrdersList, statuses, productsList) {
+export function renderOldOrdersTable(oldOrdersList, statuses, productsList) {
     return (
-        <div className="ordersTable">
+        <div className="oldOrdersTable">
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -64,7 +26,7 @@ export function renderCurrentOrdersTable(currentOrdersList, statuses, productsLi
                     </thead>
                     <tbody>
                         { 
-                        Array.isArray(currentOrdersList) ? currentOrdersList.map((order, index) => (
+                        Array.isArray(oldOrdersList) ? oldOrdersList.map((order, index) => (
                                 <tr key={index}>
                                     <td>{order.username}</td>
                                     <td>{order.email}</td>
@@ -82,7 +44,7 @@ export function renderCurrentOrdersTable(currentOrdersList, statuses, productsLi
                                     </td>
                                     <td>{formatDate(order.date)}</td>
                                     <td>
-                                        <Form.Select defaultValue={order.status} onChange={(event) => handleChange_statusSelect(event, order)}>
+                                        <Form.Select value={order.status} readOnly disabled>
                                             {Object.keys(statuses).map((key, index) => (
                                                 <option key={index} value={statuses[key]}>{key}</option>
                                             ))}

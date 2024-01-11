@@ -30,7 +30,7 @@ function handleSubmit_editProduct(event) {
     });
 }
 
-export function renderEditProductForm(showEditProductForm, setShowEditProductForm, product) {
+export function renderEditProductForm(showEditProductForm, setShowEditProductForm, product, categories) {
     return (
         <Modal show={showEditProductForm} centered>
             <Modal.Header>
@@ -39,7 +39,7 @@ export function renderEditProductForm(showEditProductForm, setShowEditProductFor
             <Modal.Body>
                 <Form onSubmit={(event) => handleSubmit_editProduct(event)}>
                     <Form.Group controlId="productId">
-                        <Form.Control name="id" type="text" defaultValue={product.id} />
+                        <Form.Control name="id" type="hidden" defaultValue={product.id} />
                     </Form.Group>
                     <Form.Group controlId="productName">
                         <Form.Label>Product Name:</Form.Label>
@@ -63,9 +63,16 @@ export function renderEditProductForm(showEditProductForm, setShowEditProductFor
 
                     <Form.Group controlId="productCategory">
                         <Form.Label>Product Category ID:</Form.Label>
-                        <Form.Control name="idcategory" type="number" defaultValue={product.category.idcategory}/>
+                        <Form.Select defaultValue={product.category.idcategory} name="idcategory">
+                                {
+                                    Array.isArray(categories) ? categories.map((category, index) => (
+                                        <option key={index} value={category.idcategory}>{category.name}</option>
+                                    )) : null
+                                
+                                }
+                        </Form.Select>
                     </Form.Group>
-
+                    <br/>
                     <Button variant="primary" type="submit">
                         Save Changes
                     </Button>
