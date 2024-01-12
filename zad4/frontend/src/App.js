@@ -1,5 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Alert } from 'react-bootstrap';
+import React, { Component, useState } from 'react';
 import './styling/App.css';
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./elements/NavBar";
@@ -12,7 +11,6 @@ import './styling/App.css';
 
 const AppContent = () => {
   const [cartList, setCartList] = useState([]);
-  const [showAlert, setShowAlert] = useState(false);
 
   function handleAddToCart(product) {
     const isProductInCart = cartList.some(cartProduct => cartProduct.id === product.id);

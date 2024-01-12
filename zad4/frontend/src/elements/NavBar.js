@@ -1,21 +1,24 @@
 import React from 'react';
 import '../styling/NavBar.css';
-import { Link } from "react-router-dom";
+import { Nav } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavBar() {
+    const [activeKey, setActiveKey] = React.useState("/");
+    const navigate = useNavigate();
+    const handleSelect = (eventKey) => {
+        setActiveKey(eventKey);
+        navigate(eventKey);
+    }
 
     return (
-        <div className="NavBar">
-            <nav className="navbar navbar-expand-lg">
-                <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <Link to={"/"} className="nav-link-unstyled">Home page</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to={"/shopping-cart"} className="nav-link-unstyled">Shopping Cart</Link>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <Nav variant="tabs" activeKey={activeKey} onSelect={handleSelect}>
+            <Nav.Item>
+                <Nav.Link eventKey="/">Home page</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link eventKey="/shopping-cart">Shopping Cart</Nav.Link>
+            </Nav.Item>
+        </Nav>
     )
 }

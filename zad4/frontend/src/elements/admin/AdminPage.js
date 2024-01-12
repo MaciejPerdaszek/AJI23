@@ -48,7 +48,7 @@ export default function AdminPage() {
                 let current = [];
                 let old = [];
                 for(let order of data) {
-                    if(order.status != 4 && order.status != 5) {
+                    if(order.status !== 4 && order.status !== 5) {
                         current.push(order);
                     }
                     else {
