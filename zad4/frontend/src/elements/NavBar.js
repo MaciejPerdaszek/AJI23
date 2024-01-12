@@ -19,6 +19,9 @@ export default function NavBar() {
             <Nav.Item>
                 <Nav.Link eventKey="/shopping-cart">Shopping Cart</Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+                <Nav.Link eventKey="/admin">Admin</Nav.Link>
+            </Nav.Item>
         </Nav>
     )
 }

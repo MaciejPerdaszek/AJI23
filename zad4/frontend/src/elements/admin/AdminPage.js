@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { renderEditProductForm } from "./forms";
 import { renderProductTableFilter } from "../productsTable";
 import { renderProductsTable, renderEditProductButton } from "../productsTable";
 import '../../styling/MainPage.css';
 import { renderCurrentOrdersTable } from "./currentOrdersTable";
 import { renderOldOrdersTable } from "./ordersHistoryTable";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminPage() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const password = prompt("Enter admin password");
+        if(password !== "admin") {
+            alert("Wrong password");
+            navigate("/");
+        }
+    }, [navigate]);
 
     const [showEditProductForm, setShowEditProductForm] = React.useState(false);
 

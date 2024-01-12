@@ -75,7 +75,8 @@ export function renderCurrentOrdersTable(currentOrdersList, statuses, productsLi
                                         Array.isArray(order.orderProducts) ? order.orderProducts.map((product, index) => (
                                             <div key={index}>
                                                 {
-                                                Array.isArray(productsList) ? productsList.find((p) => p.id === product.product_id).name + ' x' + product.amount: null
+                                                
+                                                Array.isArray(productsList) && product ? productsList.find((p) => p.id === product.product_id).name + ' x' + product.amount: null
                                                 } 
                                             </div>
                                         )) : null
@@ -84,7 +85,9 @@ export function renderCurrentOrdersTable(currentOrdersList, statuses, productsLi
                                     <td>{
                                         (() => {
                                             let fullPrice = 0;
+                                            if(Array.isArray(order.orderProducts))
                                             for (let op of order.orderProducts) {
+                                                
                                                 fullPrice += op.amount * productsList.find((p) => p.id === op.product_id).price;
                                             }
                                             return Math.round(fullPrice,2);
