@@ -1,10 +1,9 @@
 import React from "react";
 import '../styling/MainPage.css';
-import { render } from "vue";
 import { renderAddToCartButton, renderProductsTable } from "./productsTable";
 import { renderProductTableFilter } from "./productsTable";
 
-export default function MainPage({addToCart}) {
+export default function MainPage({addToCart, cartList}) {
 
     const [productsList, setProductsList] = React.useState([]);
     const [searchTerm, setSearchTerm] = React.useState("");
@@ -28,9 +27,7 @@ export default function MainPage({addToCart}) {
     React.useEffect(() => {
         getProducts();
         getCategories();
-    }, []);
-
-
+    }, [cartList]);
 
     return (
         <div className="MainPage">
@@ -38,7 +35,7 @@ export default function MainPage({addToCart}) {
                                     selectedCategory, setSelectedCategory, 
                                     categoriesList)}
             
-            {renderProductsTable(productsList, searchTerm, selectedCategory, renderAddToCartButton(addToCart))}
+            {renderProductsTable(productsList, searchTerm, selectedCategory, renderAddToCartButton(addToCart, cartList))}
         </div>
     )
 }

@@ -134,7 +134,7 @@ export default function ShoppingCart({ list }) {
                 </table>
             </div>
             <div className="text-right float-right">
-                <h4>Total Price: {calculateTotalPrice()}</h4>
+                <h4>Total Price: {Math.round(calculateTotalPrice(), 2)}</h4>
             </div>
             <hr></hr>
             <div className="container mt-3">

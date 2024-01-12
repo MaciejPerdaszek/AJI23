@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
+import { Alert } from 'react-bootstrap';
 import './styling/App.css';
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./elements/NavBar";
@@ -10,20 +11,25 @@ import './styling/App.css';
 
 
 const AppContent = () => {
-  let cartList = [];
+  const [cartList, setCartList] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   function handleAddToCart(product) {
-    if(cartList.includes(product)) {
-      return;
+    const isProductInCart = cartList.some(cartProduct => cartProduct.id === product.id);
+    if(isProductInCart) {
+      const newCartList = cartList.filter(cartProduct => cartProduct.id !== product.id);
+      setCartList(newCartList);
     }
-    cartList.push(product);
+    else {
+      setCartList(prevCartList => [...prevCartList, product]);
+    }
   }
 
   return (
     <div className="App">
       <NavBar />
       <Routes>
-        <Route path="/" element={<MainPage addToCart={handleAddToCart} />} />
+        <Route path="/" element={<MainPage addToCart={handleAddToCart} cartList={cartList} />} />
         <Route path="/shopping-cart" element={<ShoppingCart list={cartList} />} />
         <Route path ="/admin" element={<AdminPage />} />
       </Routes>

@@ -69,14 +69,13 @@ export function renderProductsTable(productsList, searchTerm, selectedCategory, 
             </div>
     )
 }
-
-export function renderAddToCartButton(addToCart) {
+const isProductInCart = (product, cartList) => cartList.some(cartProduct => cartProduct.id === product.id);
+export function renderAddToCartButton(addToCart, cartList) {
     return function render(product) {
         return (
             <button className="btn btn-primary" onClick={() => {
                 addToCart(product);
-                const toastEl = document.getElementById('liveToast');
-            }}>Add To Cart</button>
+            }}>{isProductInCart(product, cartList) ? 'In Cart' : 'Add To Cart'}</button>
         )
     }
 }
