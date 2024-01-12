@@ -117,7 +117,7 @@ export default function ShoppingCart({ list }) {
                             <tr key={index}>
                                 <td>{product.name}</td>
                                 <td>{product.description}</td>
-                                <td>{product.price}</td>
+                                <td>{Math.round(product.price, 2)}</td>
                                 <td>
                                     <button className="btn btn-danger" onClick={() => handleDecrement(product.id)}>-</button>
                                 </td>

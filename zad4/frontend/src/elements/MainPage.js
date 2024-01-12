@@ -4,10 +4,9 @@ import { render } from "vue";
 import { renderAddToCartButton, renderProductsTable } from "./productsTable";
 import { renderProductTableFilter } from "./productsTable";
 
-export default function MainPage({ onAddToCart }) {
+export default function MainPage({addToCart}) {
 
     const [productsList, setProductsList] = React.useState([]);
-    const [productsCart, setProductCart] = React.useState([]);
     const [searchTerm, setSearchTerm] = React.useState("");
     const [categoriesList, setCategoriesList] = React.useState([]);
     const [selectedCategory, setSelectedCategory] = React.useState(null);
@@ -29,8 +28,7 @@ export default function MainPage({ onAddToCart }) {
     React.useEffect(() => {
         getProducts();
         getCategories();
-        onAddToCart(productsCart);
-    }, [productsCart]);
+    }, []);
 
 
 
@@ -40,7 +38,7 @@ export default function MainPage({ onAddToCart }) {
                                     selectedCategory, setSelectedCategory, 
                                     categoriesList)}
             
-            {renderProductsTable(productsList, searchTerm, selectedCategory, renderAddToCartButton(productsCart, setProductCart))}
+            {renderProductsTable(productsList, searchTerm, selectedCategory, renderAddToCartButton(addToCart))}
         </div>
     )
 }

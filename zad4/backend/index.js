@@ -13,12 +13,15 @@ var cors = require("cors");
 
 const {StatusCodes, ReasonPhrases, getReasonPhrase} = require('http-status-codes');
 
+var corsOptions = {
+  origin: "http://localhost:3000"
+};
 
 app.get('/', (req, res) => {
   res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))
 })
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());

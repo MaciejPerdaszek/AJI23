@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import './styling/App.css';
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./elements/NavBar";
@@ -8,18 +8,22 @@ import AdminPage from "./elements/admin/AdminPage"
 
 import './styling/App.css';
 
-const AppContent = () => {
-  const [cartList, setCartList] = useState([{}]);
 
-  const handleAddToCart = (list) => {
-    setCartList(list);
-  };
+const AppContent = () => {
+  let cartList = [];
+
+  function handleAddToCart(product) {
+    if(cartList.includes(product)) {
+      return;
+    }
+    cartList.push(product);
+  }
 
   return (
     <div className="App">
       <NavBar />
       <Routes>
-        <Route path="/" element={<MainPage onAddToCart={handleAddToCart} />} />
+        <Route path="/" element={<MainPage addToCart={handleAddToCart} />} />
         <Route path="/shopping-cart" element={<ShoppingCart list={cartList} />} />
         <Route path ="/admin" element={<AdminPage />} />
       </Routes>

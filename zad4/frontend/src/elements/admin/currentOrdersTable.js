@@ -58,6 +58,7 @@ export function renderCurrentOrdersTable(currentOrdersList, statuses, productsLi
                             <th scope="col">E-mail</th>
                             <th scope="col">Phone number</th>
                             <th scope="col">Products</th>
+                            <th scope="col">Full Price</th>
                             <th scope="col">Date</th>
                             <th scope="col">Status</th>
                         </tr>
@@ -80,6 +81,15 @@ export function renderCurrentOrdersTable(currentOrdersList, statuses, productsLi
                                         )) : null
                                     }
                                     </td>
+                                    <td>{
+                                        (() => {
+                                            let fullPrice = 0;
+                                            for (let op of order.orderProducts) {
+                                                fullPrice += op.amount * productsList.find((p) => p.id === op.product_id).price;
+                                            }
+                                            return Math.round(fullPrice,2);
+                                        })()
+                                        }</td>
                                     <td>{formatDate(order.date)}</td>
                                     <td>
                                         <Form.Select defaultValue={order.status} onChange={(event) => handleChange_statusSelect(event, order)}>

@@ -70,12 +70,12 @@ export function renderProductsTable(productsList, searchTerm, selectedCategory, 
     )
 }
 
-export function renderAddToCartButton(productsCart, setProductCart) {
+export function renderAddToCartButton(addToCart) {
     return function render(product) {
         return (
             <button className="btn btn-primary" onClick={() => {
-                const newProductsCart = [...productsCart, product];
-                setProductCart(newProductsCart);
+                addToCart(product);
+                const toastEl = document.getElementById('liveToast');
             }}>Add To Cart</button>
         )
     }
