@@ -7,15 +7,16 @@ import { renderCurrentOrdersTable } from "./currentOrdersTable";
 import { renderOldOrdersTable } from "./ordersHistoryTable";
 import { useNavigate } from "react-router-dom";
 
-export default function AdminPage() {
-    const navigate = useNavigate();
+export default function AdminPage({setActivePage}) {
+    let navigate = useNavigate();
     useEffect(() => {
         const password = prompt("Enter admin password");
         if(password !== "admin") {
             alert("Wrong password");
+            setActivePage("/");
             navigate("/");
         }
-    }, [navigate]);
+    }, [navigate, setActivePage]);
 
     const [showEditProductForm, setShowEditProductForm] = React.useState(false);
 
@@ -82,13 +83,13 @@ export default function AdminPage() {
         <div className="AdminPage">
             <h1>Admin Page</h1>
             <h2>Products</h2>
-            {renderEditProductForm(showEditProductForm, setShowEditProductForm, productToEdit, categoriesList)}
+            {renderEditProductForm(showEditProductForm, setShowEditProductForm, productToEdit, categoriesList, getProducts)}
             {renderProductTableFilter(searchTerm, setSearchTerm, 
                                     selectedCategory, setSelectedCategory, 
                                     categoriesList)}
             {renderProductsTable(productsList, searchTerm, selectedCategory, renderEditProductButton(setShowEditProductForm, setProductToEdit))}
             <h2>Current orders</h2>
-            {renderCurrentOrdersTable(currentOrdersList, statusesList, productsList)}
+            {renderCurrentOrdersTable(currentOrdersList, statusesList, productsList, getOrders)}
             <h2>Orders history</h2>
             {renderOldOrdersTable(oldOrdersList, statusesList, productsList)}
         </div>

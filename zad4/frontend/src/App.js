@@ -11,6 +11,8 @@ import './styling/App.css';
 
 const AppContent = () => {
   const [cartList, setCartList] = useState([]);
+  
+  const [activePage, setActivePage] = React.useState("/");
 
   function handleAddToCart(product) {
     const isProductInCart = cartList.some(cartProduct => cartProduct.id === product.id);
@@ -23,13 +25,17 @@ const AppContent = () => {
     }
   }
 
+  function resetCart() {
+    setCartList([]);
+  }
+
   return (
     <div className="App">
-      <NavBar />
+      <NavBar activePage={activePage} setActivePage={setActivePage}/>
       <Routes>
         <Route path="/" element={<MainPage addToCart={handleAddToCart} cartList={cartList} />} />
-        <Route path="/shopping-cart" element={<ShoppingCart list={cartList} />} />
-        <Route path ="/admin" element={<AdminPage />} />
+        <Route path="/shopping-cart" element={<ShoppingCart list={cartList} resetCart={resetCart} setActivePage={setActivePage}/>} />
+        <Route path ="/admin" element={<AdminPage setActivePage={setActivePage}/>} />
       </Routes>
     </div>
   );

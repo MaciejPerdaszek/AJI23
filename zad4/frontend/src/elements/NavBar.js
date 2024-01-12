@@ -3,16 +3,15 @@ import '../styling/NavBar.css';
 import { Nav } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-export default function NavBar() {
-    const [activeKey, setActiveKey] = React.useState("/");
+export default function NavBar({activePage, setActivePage}) {
     const navigate = useNavigate();
     const handleSelect = (eventKey) => {
-        setActiveKey(eventKey);
+        setActivePage(eventKey);
         navigate(eventKey);
     }
 
     return (
-        <Nav variant="tabs" activeKey={activeKey} onSelect={handleSelect}>
+        <Nav variant="tabs" activeKey={activePage} onSelect={handleSelect}>
             <Nav.Item>
                 <Nav.Link eventKey="/">Home page</Nav.Link>
             </Nav.Item>

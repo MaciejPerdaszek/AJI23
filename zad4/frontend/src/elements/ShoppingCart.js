@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import '../styling/MainPage.css';
 import { useNavigate } from "react-router-dom";
 
-export default function ShoppingCart({ list }) {
+export default function ShoppingCart({ list, resetCart, setActivePage}) {
 
     const [amounts, setAmounts] = React.useState({});
     const formRef = useRef(null);
@@ -64,7 +64,6 @@ export default function ShoppingCart({ list }) {
                 phone_number: phoneInput.value,
                 products: products
             };
-            console.log(order);
             fetch("http://localhost:4000/orders", {
                 method: "POST",
                 headers: {
@@ -73,7 +72,9 @@ export default function ShoppingCart({ list }) {
                 body: JSON.stringify(order),
             })
                 .then((response) => response.json())
-                .then((data) => {
+                .then(() => {
+                    resetCart();
+                    setActivePage('/')
                     navigate('/');
                     console.log("Order submitted successfully");
 
@@ -103,6 +104,7 @@ export default function ShoppingCart({ list }) {
 
     return (
         <div className="container-fluid">
+            <h1>Shopping cart</h1>
             <div className="productsTable">
                 <table className="table table-striped">
                     <thead>

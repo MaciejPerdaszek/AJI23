@@ -10,7 +10,7 @@ function formatDate(dateText) {
     return year + '-' + month + '-' + day;
 }
 
-function handleChange_statusSelect(event, order) {
+function handleChange_statusSelect(event, order, getOrders) {
     const value = event.target.value;
     let orderProducts = [];
     for (let op of order.orderProducts) {
@@ -38,17 +38,16 @@ function handleChange_statusSelect(event, order) {
     }).then((response) => {
         if (response.ok) {
             alert("Order status changed successfully!");
-            window.location.reload();
+            getOrders();
         } else {
             response.json().then((data) => {
                 alert("Error changing order status: " + data.error);
-                window.location.reload();
             });
         }
     });
 }
 
-export function renderCurrentOrdersTable(currentOrdersList, statuses, productsList) {
+export function renderCurrentOrdersTable(currentOrdersList, statuses, productsList, getOrders) {
     return (
         <div className="ordersTable">
                 <table className="table table-striped">
@@ -76,7 +75,7 @@ export function renderCurrentOrdersTable(currentOrdersList, statuses, productsLi
                                             <div key={index}>
                                                 {
                                                 
-                                                Array.isArray(productsList) && product ? productsList.find((p) => p.id === product.product_id).name + ' x' + product.amount: null
+                                                Array.isArray(productsList) && product && productsList.find((p) => p.id === product.product_id) ? productsList.find((p) => p.id === product.product_id).name + ' x' + product.amount: null
                                                 } 
                                             </div>
                                         )) : null
@@ -87,17 +86,18 @@ export function renderCurrentOrdersTable(currentOrdersList, statuses, productsLi
                                             let fullPrice = 0;
                                             if(Array.isArray(order.orderProducts))
                                             for (let op of order.orderProducts) {
-                                                
-                                                fullPrice += op.amount * productsList.find((p) => p.id === op.product_id).price;
+                                                if(productsList.find((p) => p.id === op.product_id))
+                                                    fullPrice += op.amount * productsList.find((p) => p.id === op.product_id).price;
                                             }
                                             return Math.round(fullPrice,2);
                                         })()
                                         }</td>
                                     <td>{formatDate(order.date)}</td>
                                     <td>
-                                        <Form.Select defaultValue={order.status} onChange={(event) => handleChange_statusSelect(event, order)}>
+                                        <Form.Select defaultValue={order.status} onChange={(event) => handleChange_statusSelect(event, order, getOrders)}>
                                             {Object.keys(statuses).map((key, index) => (
-                                                <option key={index} value={statuses[key]}>{key}</option>
+                                                order.status > statuses[key] ? <option key={index} value={statuses[key]} disabled>{key}</option> 
+                                                : <option key={index} value={statuses[key]}>{key}</option>
                                             ))}
                                         </Form.Select>
                                     </td>

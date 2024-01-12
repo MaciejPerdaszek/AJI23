@@ -1,7 +1,7 @@
 import React from "react";
 import {Modal, Button, Form} from "react-bootstrap";
 
-function handleSubmit_editProduct(event) {
+function handleSubmit_editProduct(event, getProducts) {
     event.preventDefault();
     const form = event.target;
     const data = new FormData(form); 
@@ -20,24 +20,24 @@ function handleSubmit_editProduct(event) {
     }).then((response) => {
         if (response.ok) {
             alert("Product edited successfully!");
-            window.location.reload();
+            getProducts();
         }  else {
             response.json().then((data) => {
                 alert("Error editing product: " + data.error);
-                window.location.reload();
             });
         }
     });
 }
 
-export function renderEditProductForm(showEditProductForm, setShowEditProductForm, product, categories) {
+export function renderEditProductForm(showEditProductForm, setShowEditProductForm, product, categories, getProducts) {
     return (
         <Modal show={showEditProductForm} centered>
             <Modal.Header>
                 <Modal.Title>Edit Product</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form onSubmit={(event) => handleSubmit_editProduct(event)}>
+                <Form onSubmit={(event) => { setShowEditProductForm(false);
+                    handleSubmit_editProduct(event, getProducts)}}>
                     <Form.Group controlId="productId">
                         <Form.Control name="id" type="hidden" defaultValue={product.id} />
                     </Form.Group>

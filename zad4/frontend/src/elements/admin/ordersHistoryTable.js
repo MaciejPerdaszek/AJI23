@@ -47,7 +47,8 @@ export function renderOldOrdersTable(oldOrdersList, statuses, productsList) {
                                         (() => {
                                             let fullPrice = 0;
                                             for (let op of order.orderProducts) {
-                                                fullPrice += op.amount * productsList.find((p) => p.id === op.product_id).price;
+                                                if(productsList.find((p) => p.id === op.product_id))
+                                                    fullPrice += op.amount * productsList.find((p) => p.id === op.product_id).price;
                                             }
                                             return Math.round(fullPrice,2);
                                         })()

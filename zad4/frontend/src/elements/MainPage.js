@@ -31,10 +31,12 @@ export default function MainPage({addToCart, cartList}) {
 
     return (
         <div className="MainPage">
+            <h1>Main Page</h1>
+            <h3>Search products</h3>
             {renderProductTableFilter(searchTerm, setSearchTerm, 
                                     selectedCategory, setSelectedCategory, 
                                     categoriesList)}
-            
+            <h3>Products list</h3>
             {renderProductsTable(productsList, searchTerm, selectedCategory, renderAddToCartButton(addToCart, cartList))}
         </div>
     )
